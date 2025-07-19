@@ -6,7 +6,6 @@ export default function handler(req, res) {
   const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   const ua = req.headers['user-agent'] || '';
 
-  // Ignora bots e ações do GitHub
   if (/bot|crawl|github/i.test(ua)) {
     return res.status(200).end();
   }
