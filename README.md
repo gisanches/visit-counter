@@ -2,6 +2,11 @@
 
 This project is a simple and elegant **visit counter** using **Supabase** (PostgreSQL) for data storage and **Vercel Functions** to expose HTTP endpoints. The data is consumed by **Shields.io**, allowing you to generate a dynamic badge for display in your GitHub README.
 
+<br>
+<p align="center">
+  <img src="https://img.shields.io/endpoint?url=https://visit-counter-kappa.vercel.app/api/visits-json&cacheSeconds=10" alt="Visits" />
+</p>
+
 ## 🚀 Features
 
 * **Visit Incrementation**: Endpoint that increments and returns the total visit count.
