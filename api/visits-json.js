@@ -5,21 +5,10 @@ export default async function (req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { data: current, error: getError } = await supabase
+  const { data, error } = await supabase
     .from('visits')
     .select('count')
-    .eq('id', 1)
-    .single();
+    .eq('id', 1);
 
-  if (getError) {
-    return res.status(500).json({ error: getError.message });
-  }
-
-  res.setHeader('Content-Type', 'application/json');
-  return res.status(200).json({
-    schemaVersion: 1,
-    label: "visits",
-    message: current.count.toString(),
-    color: "8a63d2"
-  });
+  return res.status(200).json({ data, error });
 }
