@@ -12,20 +12,19 @@ export default async function handler(req, res) {
 
   const { data, error } = await supabase
     .from('visits')
-    .update({ count: 1 })
+    .update({ count: supabase.raw('count + 1') })
     .eq('id', 1)
-    .increment('count', 1)
     .select();
 
-  if (error) {
-    return res.status(500).json({ error });
+  if (error || !data || data.length === 0) {
+    return res.status(500).json({ error: error?.message || 'Update failed' });
   }
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="130" height="28">
-    <rect width="130" height="28" fill="#2d2d2d" rx="6"/>
-    <text x="16" y="18" fill="#fff" font-size="13" font-family="Verdana">Visits: ${data[0].count}</text>
-  </svg>`;
+    <svg xmlns="http://www.w3.org/2000/svg" width="130" height="28">
+      <rect width="130" height="28" fill="#2d2d2d" rx="6"/>
+      <text x="16" y="18" fill="#fff" font-size="13" font-family="Verdana">Visits: ${data[0].count}</text>
+    </svg>`;
 
   res.setHeader('Content-Type', 'image/svg+xml');
   return res.status(200).send(svg.trim());
