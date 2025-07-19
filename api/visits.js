@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase.js'
 
-export default async function handler(req, res) {
+export default async function (req, res) {
   if (req.method !== 'GET') {
     return res.status(405).send('Method not allowed');
   }
