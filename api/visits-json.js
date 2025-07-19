@@ -10,5 +10,20 @@ export default async function (req, res) {
     .select('count')
     .eq('id', 1);
 
-  return res.status(200).json({ data, error });
+  if (error || !data || !data[0]) {
+    return res.status(500).json({ 
+      schemaVersion: 1,
+      label: "visits",
+      message: "error",
+      color: "red"
+    });
+  }
+
+  res.setHeader('Content-Type', 'application/json');
+  return res.status(200).json({
+    schemaVersion: 1,
+    label: "visits",
+    message: String(data[0].count),
+    color: "8a63d2"
+  });
 }
